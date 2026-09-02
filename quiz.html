@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Enterprise Networking Comprehensive Quiz (60 Items)</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    .correct { background-color: #d1fae5 !important; border-color: #10b981 !important; color: #065f46 !important; }
+    .incorrect { background-color: #fee2e2 !important; border-color: #ef4444 !important; color: #991b1b !important; }
+  </style>
+</head>
+<body class="bg-slate-100 text-slate-800 font-sans min-h-screen pb-12">
+  <header class="bg-blue-900 text-white py-8 px-4 shadow-lg mb-8">
+    <div class="max-w-5xl mx-auto">
+      <h1 class="text-3xl font-bold">Enterprise Networking (CTADNET/L) Module Quiz</h1>
+      <p class="text-blue-200 mt-2">60 Items: 30 Multiple Choice, 15 True/False, 15 Identification (Based strictly on Weeks 2–6 Modules)</p>
+    </div>
+  </header>
+
+  <main class="max-w-5xl mx-auto px-4">
+    <!-- Scoreboard Header -->
+    <div class="bg-white p-6 rounded-xl shadow-md mb-8 flex flex-wrap justify-between items-center sticky top-4 z-50 border border-slate-200">
+      <div>
+        <span class="text-lg font-semibold text-slate-600">Total Progress:</span>
+        <span id="progress-text" class="text-xl font-bold text-blue-600">0 / 60 Answered</span>
+      </div>
+      <div>
+        <span class="text-lg font-semibold text-slate-600">Score:</span>
+        <span id="score-text" class="text-2xl font-black text-emerald-600">0</span>
+      </div>
+    </div>
+
+    <!-- PART 1: MULTIPLE CHOICE -->
+    <section class="mb-12">
+      <div class="border-b-4 border-blue-600 pb-2 mb-6">
+        <h2 class="text-2xl font-bold text-slate-800">Part 1: Multiple Choice (30 Items)</h2>
+        <p class="text-sm text-slate-500">Select the best answer for each question.</p>
+      </div>
+      <div id="mc-container" class="space-y-6"></div>
+    </section>
+
+    <!-- PART 2: TRUE OR FALSE -->
+    <section class="mb-12">
+      <div class="border-b-4 border-indigo-600 pb-2 mb-6">
+        <h2 class="text-2xl font-bold text-slate-800">Part 2: True or False (15 Items)</h2>
+        <p class="text-sm text-slate-500">Choose whether the statement is True or False.</p>
+      </div>
+      <div id="tf-container" class="space-y-6"></div>
+    </section>
+
+    <!-- PART 3: IDENTIFICATION -->
+    <section class="mb-12">
+      <div class="border-b-4 border-teal-600 pb-2 mb-6">
+        <h2 class="text-2xl font-bold text-slate-800">Part 3: Identification (15 Items)</h2>
+        <p class="text-sm text-slate-500">Type the exact term or command defined in the modules and click Check.</p>
+      </div>
+      <div id="id-container" class="space-y-6"></div>
+    </section>
+
+    <!-- Final Results Card -->
+    <div id="final-card" class="hidden bg-white p-8 rounded-xl shadow-xl text-center border-2 border-blue-500 my-8">
+      <h3 class="text-3xl font-extrabold text-slate-800 mb-2">Quiz Completed!</h3>
+      <p class="text-lg text-slate-600 mb-4">Your final score is:</p>
+      <div class="text-5xl font-black text-blue-600 mb-6"><span id="final-score">0</span> / 60</div>
+      <button onclick="window.scrollTo({top: 0, behavior: 'smooth'}); location.reload();" class="bg-blue-600 text-white px-6 py-3 rounded-lg font-bold hover:bg-blue-700 transition">Retake Quiz</button>
+    </div>
+  </main>
+
+  <script>
+    const mcData = [
+      {
+        q: "1. Which layer of the Cisco Three-Layer Hierarchical Model is responsible for fast and efficient transport across the network backbone without packet manipulation?",
+        options: ["Access Layer", "Distribution Layer", "Core Layer", "Data Link Layer"],
+        answer: 2,
+        explanation: "The Core layer's primary responsibility is high-speed forwarding, low latency, high availability, and backbone connectivity."
+      },
+      {
+        q: "2. Which protocol allows a group of routers to share a virtual IP address to provide high availability and redundancy for default gateways?",
+        options: ["OSPF", "HSRP", "NAT", "SLAAC"],
+        answer: 1,
+        explanation: "Protocols like HSRP (Hot Standby Router Protocol) allow routers to share a virtual IP for high availability."
+      },
+      {
+        q: "3. What process combines multiple contiguous IPv4 subnets into a single larger network address to minimize routing table size?",
+        options: ["Route Summarization / Aggregation", "Subnet Masking", "Dynamic Translation", "Port Address Translation"],
+        answer: 0,
+        explanation: "Route summarization/aggregation combines multiple routes into one summarized route, reducing routing table size."
+      },
+      {
+        q: "4. What is the prompt for Privileged EXEC mode in Cisco IOS?",
+        options: ["Switch>", "Switch#", "Switch(config)#", "Switch(config-if)#"],
+        answer: 1,
+        explanation: "Privileged EXEC mode uses the '#' prompt (e.g., Switch# or Router#)."
+      },
+      {
+        q: "5. Which command is used to configure a secret encrypted password for Privileged EXEC mode?",
+        options: ["enable password", "service password-encryption", "enable secret", "username admin password"],
+        answer: 2,
+        explanation: "The command 'enable secret <password>' sets an encrypted password for Privileged EXEC mode access."
+      },
+      {
+        q: "6. Why does a Layer 2 switch require an IP address on Virtual LAN 1 (VLAN 1)?",
+        options: ["To forward Ethernet frames between VLANs", "For remote management access such as SSH, Telnet, and SNMP", "To assign IP addresses to connected PCs", "To route packets to external networks"],
+        answer: 1,
+        explanation: "A Layer 2 switch requires a management IP address on VLAN 1 for SSH, Telnet, Web management, and SNMP monitoring."
+      },
+      {
+        q: "7. Which standard protocol tags Ethernet frames with a VLAN ID to allow multiple VLAN traffic over a single trunk link?",
+        options: ["PAgP", "IEEE 802.1Q", "LACP", "IEEE 802.1AB"],
+        answer: 1,
+        explanation: "Trunk links carry traffic for multiple VLANs using VLAN tagging, usually IEEE 802.1Q."
+      },
+      {
+        q: "8. What feature on a Cisco switch immediately puts an interface into forwarding state, bypassing listening and learning states, when connected to an end device?",
+        options: ["BPDU Guard", "Port Security", "PortFast", "EtherChannel"],
+        answer: 2,
+        explanation: "Spanning-Tree PortFast allows edge ports connected to a single host to bypass normal STP convergence states."
+      },
+      {
+        q: "9. Which Port Security violation action shuts down the port immediately when an unauthorized MAC address is detected?",
+        options: ["Protect", "Restrict", "Shutdown", "Disabled"],
+        answer: 2,
+        explanation: "The 'shutdown' violation mode disables/shuts down the port upon a security violation."
+      },
+      {
+        q: "10. Which link aggregation negotiation protocol is an open standard IEEE protocol?",
+        options: ["PAgP", "LACP", "CDP", "HDLC"],
+        answer: 1,
+        explanation: "LACP (Link Aggregation Control Protocol) is the open-standard link aggregation protocol."
+      },
+      {
+        q: "11. What Cisco IOS command enables an enterprise router interface after applying an IP address configuration?",
+        options: ["enable", "no shutdown", "interface up", "start"],
+        answer: 1,
+        explanation: "The 'no shutdown' command enables a router or switch interface."
+      },
+      {
+        q: "12. What type of static route uses 0.0.0.0 0.0.0.0 as its destination network and mask?",
+        options: ["Summary Route", "Default Route", "Floating Static Route", "Dynamic Route"],
+        answer: 1,
+        explanation: "A default route uses destination 0.0.0.0 0.0.0.0 to match all packets not specifically found in the routing table."
+      },
+      {
+        q: "13. What is the administrative distance of OSPF routes in Cisco IOS?",
+        options: ["90", "100", "110", "120"],
+        answer: 2,
+        explanation: "As shown in the modules, the default administrative distance for OSPF is 110."
+      },
+      {
+        q: "14. Which Access Control List range corresponds to Standard IP ACLs in Cisco IOS?",
+        options: ["1 - 99", "100 - 199", "200 - 299", "1300 - 1999"],
+        answer: 0,
+        explanation: "Standard IP access lists use numbers 1–99."
+      },
+      {
+        q: "15. In the DHCP DORA process, which message is sent by the DHCP server to offer an available IP address to the client?",
+        options: ["DHCPDISCOVER", "DHCPOFFER", "DHCPREQUEST", "DHCPACK"],
+        answer: 1,
+        explanation: "The server responds to a broadcast DISCOVER message with a DHCPOFFER containing an IP address and lease details."
+      },
+      {
+        q: "16. Which DHCP message is a broadcast sent by the client formally asking to lease the offered IP address?",
+        options: ["DHCPDISCOVER", "DHCPOFFER", "DHCPREQUEST", "DHCPACK"],
+        answer: 2,
+        explanation: "DHCPREQUEST is sent as a broadcast by the client formally requesting to lease the offered IP address."
+      },
+      {
+        q: "17. What command on an interface acts as a DHCP Relay Agent by converting DHCP broadcast messages into unicast messages sent to a remote server?",
+        options: ["ip dhcp pool", "ip helper-address", "ip default-gateway", "ip nat inside"],
+        answer: 1,
+        explanation: "The 'ip helper-address <server-ip>' command forwards DHCP broadcasts across routers to a remote DHCP server."
+      },
+      {
+        q: "18. What type of Network Address Translation assigns a fixed 1-to-1 permanent mapping between a private IP and a public IP?",
+        options: ["Static NAT", "Dynamic NAT", "Port Address Translation (PAT)", "NAT Overload"],
+        answer: 0,
+        explanation: "Static NAT maps one private IP address to one public IP address in a permanent fixed 1-to-1 relationship."
+      },
+      {
+        q: "19. Port Address Translation (PAT) is also known by what name in Cisco configurations?",
+        options: ["Static NAT", "NAT Overload", "SLAAC", "DHCP Relay"],
+        answer: 1,
+        explanation: "PAT is also called NAT Overload (or NAPT - Network Address Port Translation)."
+      },
+      {
+        q: "20. How long is an IPv6 address?",
+        options: ["32 bits", "64 bits", "128 bits", "256 bits"],
+        answer: 2,
+        explanation: "IPv4 uses 32-bit addresses while IPv6 uses 128-bit addresses."
+      },
+      {
+        q: "21. What IPv6 address type prefix represents a Link-Local address used solely for local-link communication?",
+        options: ["2000::/3", "ff00::/8", "fe80::/10", "::1"],
+        answer: 2,
+        explanation: "Link-Local addresses use the prefix fe80::/10."
+      },
+      {
+        q: "22. Which IPv6 address type prefix represents a Global Unicast Address (GUA)?",
+        options: ["2000::/3", "ff00::/8", "fe80::/10", "::1"],
+        answer: 0,
+        explanation: "Global Unicast addresses use the prefix range 2000::/3."
+      },
+      {
+        q: "23. What protocol does IPv6 use instead of Address Resolution Protocol (ARP) for address resolution and neighbor discovery?",
+        options: ["DHCPv6", "SLAAC", "NDP (Neighbor Discovery Protocol)", "ICMPv4"],
+        answer: 2,
+        explanation: "IPv6 does not use ARP; instead, it uses Neighbor Discovery Protocol (NDP)."
+      },
+      {
+        q: "24. In SLAAC, what type of ICMPv6 message does a router send to advertise its network prefix to hosts?",
+        options: ["Router Solicitation (RS)", "Router Advertisement (RA)", "Neighbor Solicitation (NS)", "Neighbor Advertisement (NA)"],
+        answer: 1,
+        explanation: "The router advertises the IPv6 prefix through Router Advertisement (RA) messages."
+      },
+      {
+        q: "25. Which Cisco proprietary Layer 2 protocol allows discovery of directly connected Cisco network devices?",
+        options: ["LLDP", "CDP", "SNMP", "NTP"],
+        answer: 1,
+        explanation: "Cisco Discovery Protocol (CDP) is a Cisco proprietary Layer 2 discovery protocol."
+      },
+      {
+        q: "26. Link Layer Discovery Protocol (LLDP) is standardized under which IEEE standard?",
+        options: ["IEEE 802.1Q", "IEEE 802.3ad", "IEEE 802.1AB", "IEEE 802.1X"],
+        answer: 2,
+        explanation: "LLDP is a vendor-neutral Layer 2 protocol standardized as IEEE 802.1AB."
+      },
+      {
+        q: "27. What is the primary function of Network Time Protocol (NTP) in enterprise network management?",
+        options: ["Discover neighbor devices", "Synchronize clocks across network devices for accurate event logging", "Monitor CPU performance", "Translate private IP addresses"],
+        answer: 1,
+        explanation: "NTP synchronizes device clocks with a reliable time source so system logs and events can be correlated."
+      },
+      {
+        q: "28. What component of SNMP is a software module that runs directly on the managed device (router/switch)?",
+        options: ["SNMP Manager", "SNMP Agent", "MIB", "Syslog Server"],
+        answer: 1,
+        explanation: "An SNMP Agent is software running on the managed device (router/switch)."
+      },
+      {
+        q: "29. What term describes an unsolicited message sent by an SNMP agent to the SNMP manager to report an event immediately?",
+        options: ["Get Request", "Set Request", "Trap", "Inform Response"],
+        answer: 2,
+        explanation: "An SNMP Trap is an unsolicited alert sent proactively by the device to the manager."
+      },
+      {
+        q: "30. In Cisco Syslog message format (%FACILITY-SEVERITY-MNEMONIC: DESCRIPTION), what numerical severity level corresponds to 'Errors'?",
+        options: ["Level 0", "Level 1", "Level 3", "Level 6"],
+        answer: 2,
+        explanation: "Severity Level 3 is 'Errors' (Level 0 = Emergencies, Level 1 = Alerts, Level 2 = Critical, Level 3 = Errors)."
+      }
+    ];
+
+    const tfData = [
+      { q: "31. An Access Layer switch is primarily responsible for performing inter-VLAN routing, route summarization, and security access policy enforcement.", a: false, exp: "False. Inter-VLAN routing and policy enforcement are responsibilities of the Distribution Layer, while the Access Layer connects end devices." },
+      { q: "32. Variable Length Subnet Masking (VLSM) allows an organization to use different subnet masks for different subnets based on host requirements.", a: true, exp: "True. VLSM enables flexible subnetting and efficient IP allocation based on actual host needs." },
+      { q: "33. Basic switches support remote management via SSH and advanced features like Spanning Tree Protocol (STP) and Port Security.", a: false, exp: "False. Basic/SOHO switches are plug-and-play with no remote management or port security. Enterprise switches provide these features." },
+      { q: "34. The command 'no ip domain-lookup' prevents the switch or router from attempting to resolve mis-typed commands as domain names.", a: true, exp: "True. Disabling domain lookup saves time when mis-typing CLI commands." },
+      { q: "35. Trunk links belong to a single specific VLAN and do not support traffic tagging.", a: false, exp: "False. Access ports belong to a single VLAN; Trunk links carry traffic for multiple VLANs using tagging (IEEE 802.1Q)." },
+      { q: "36. Port Security Sticky MAC feature automatically converts dynamically learned MAC addresses into sticky secure MAC addresses in the running configuration.", a: true, exp: "True. 'switchport port-security mac-address sticky' saves dynamically learned MAC addresses to the configuration." },
+      { q: "37. EtherChannel bundles multiple physical Ethernet links into a single logical link to increase bandwidth and provide redundancy.", a: true, exp: "True. EtherChannel aggregates physical links into one logical link." },
+      { q: "38. Static routing automatically recalculates and adapts paths when a network link fails without administrator intervention.", a: false, exp: "False. Static routing requires manual updates. Dynamic routing (e.g., OSPF) automatically adapts to changes." },
+      { q: "39. Standard Access Control Lists filter traffic based on both source IP address and destination IP address.", a: false, exp: "False. Standard ACLs filter traffic based ONLY on source IP address. Extended ACLs filter source and destination." },
+      { q: "40. In Port Address Translation (PAT), multiple internal private IP addresses share a single public IP address by using different source port numbers.", a: true, exp: "True. PAT/NAT Overload uses unique transport port numbers to multiplex multiple private hosts onto one public IP." },
+      { q: "41. Neighbor Discovery Protocol (NDP) in IPv6 uses ICMPv6 messages such as Router Solicitation (RS) and Router Advertisement (RA).", a: true, exp: "True. NDP relies on ICMPv6 messages (RS, RA, NS, NA)." },
+      { q: "42. Cisco Discovery Protocol (CDP) operates at Layer 3 of the OSI model.", a: false, exp: "False. CDP operates at Layer 2 (Data Link Layer)." },
+      { q: "43. LLDP is a Cisco proprietary protocol that cannot be used on third-party non-Cisco network equipment.", a: false, exp: "False. LLDP is a vendor-neutral IEEE standard (802.1AB), whereas CDP is Cisco proprietary." },
+      { q: "44. In SNMPv1 and SNMPv2c, a Read-Only (ro) community string permits an SNMP manager to read device details but not modify device configurations.", a: true, exp: "True. The 'ro' community string provides read-only access." },
+      { q: "45. Syslog Severity Level 7 represents Debugging messages, which provide the highest detail for troubleshooting.", a: true, exp: "True. Level 7 is Debugging (Level 0 is Emergencies)." }
+    ];
+
+    const idData = [
+      {
+        q: "46. What protocol automatically provides dynamic IPv4 addressing, subnet masks, default gateways, and DNS servers to client end devices?",
+        answers: ["DHCP", "DYNAMIC HOST CONFIGURATION PROTOCOL"],
+        exp: "DHCP (Dynamic Host Configuration Protocol) automates IP configuration."
+      },
+      {
+        q: "47. Name the Cisco IOS command used to globally enable IPv6 routing on a router.",
+        answers: ["ipv6 unicast-routing", "IPV6 UNICAST-ROUTING"],
+        exp: "'ipv6 unicast-routing' is required to enable IPv6 packet forwarding on Cisco routers."
+      },
+      {
+        q: "48. What structured database file on a managed network device holds objects and variables monitored by SNMP?",
+        answers: ["MIB", "MANAGEMENT INFORMATION BASE"],
+        exp: "MIB (Management Information Base) contains managed objects and values."
+      },
+      {
+        q: "49. What unique identifier format (e.g., 1.3.6.1....) is used in SNMP to specify individual managed objects within a MIB?",
+        answers: ["OID", "OBJECT IDENTIFIER"],
+        exp: "OID (Object Identifier) uniquely identifies each managed object in a MIB tree."
+      },
+      {
+        q: "50. What feature allows an IPv6 host to automatically generate its own IPv6 address using Router Advertisement prefix information without a stateful DHCP server?",
+        answers: ["SLAAC", "STATELESS ADDRESS AUTOCONFIGURATION"],
+        exp: "SLAAC (Stateless Address Autoconfiguration) lets IPv6 hosts auto-configure addresses."
+      },
+      {
+        q: "51. What Cisco IOS verification command displays active NAT translation table entries on a router?",
+        answers: ["show ip nat translations", "SHOW IP NAT TRANSLATIONS"],
+        exp: "'show ip nat translations' displays all current active NAT mappings."
+      },
+      {
+        q: "52. Which Layer 2 protocol prevents switching loops by placing redundant switch ports into a blocking state?",
+        answers: ["STP", "SPANNING TREE PROTOCOL", "SPANNING-TREE PROTOCOL"],
+        exp: "Spanning Tree Protocol (STP) prevents switching loops."
+      },
+      {
+        q: "53. What feature immediately disables a switch port if a Spanning Tree Bridge Protocol Data Unit (BPDU) is received on a PortFast-enabled port?",
+        answers: ["BPDU GUARD", "BPDUGUARD", "SPANNING-TREE BPDUGUARD ENABLE"],
+        exp: "BPDU Guard shuts down PortFast ports if a rogue switch/BPDU is detected."
+      },
+      {
+        q: "54. What Cisco IOS command globally enables Link Layer Discovery Protocol on a Cisco device?",
+        answers: ["lldp run", "LLDP RUN"],
+        exp: "'lldp run' enables LLDP globally on Cisco switches/routers."
+      },
+      {
+        q: "55. Which command is configured on a client-facing interface to redirect DHCP broadcast queries to a remote DHCP server IP address?",
+        answers: ["ip helper-address", "IP HELPER-ADDRESS"],
+        exp: "'ip helper-address <ip>' acts as the DHCP relay command."
+      },
+      {
+        q: "56. In Syslog message structure (%LINK-3-UPDOWN), what term represents the subsystem/module that generated the message (e.g., LINK, SYS, OSPF)?",
+        answers: ["FACILITY"],
+        exp: "The general format is %FACILITY-SEVERITY-MNEMONIC: DESCRIPTION."
+      },
+      {
+        q: "57. What Cisco command is used to configure date and time logging timestamps on system messages?",
+        answers: ["service timestamps log datetime", "SERVICE TIMESTAMPS LOG DATETIME"],
+        exp: "'service timestamps log datetime' adds time information to Syslog events."
+      },
+      {
+        q: "58. What loopback address is assigned in IPv6 to represent the device itself?",
+        answers: ["::1"],
+        exp: "::1 is the IPv6 loopback address (equivalent to 127.0.0.1 in IPv4)."
+      },
+      {
+        q: "59. Name the Cisco command used to check CDP neighbor details on directly connected devices.",
+        answers: ["show cdp neighbors", "SHOW CDP NEIGHBORS"],
+        exp: "'show cdp neighbors' lists directly connected Cisco devices and interfaces."
+      },
+      {
+        q: "60. What term defines a logical grouping of devices on a physical switch that creates separate broadcast domains?",
+        answers: ["VLAN", "VIRTUAL LOCAL AREA NETWORK", "VIRTUAL LAN"],
+        exp: "A VLAN (Virtual Local Area Network) creates isolated broadcast domains on switches."
+      }
+    ];
+
+    let userScore = 0;
+    let answeredQuestions = new Set();
+
+    function updateScoreboard() {
+      document.getElementById('progress-text').innerText = `${answeredQuestions.size} / 60 Answered`;
+      document.getElementById('score-text').innerText = userScore;
+      if (answeredQuestions.size === 60) {
+        document.getElementById('final-card').classList.remove('hidden');
+        document.getElementById('final-score').innerText = userScore;
+      }
+    }
+
+    // Render Multiple Choice
+    const mcContainer = document.getElementById('mc-container');
+    mcData.forEach((item, index) => {
+      const qCard = document.createElement('div');
+      qCard.className = "bg-white p-6 rounded-xl shadow-md border border-slate-200";
+      qCard.innerHTML = `
+        <p class="font-bold text-slate-800 text-lg mb-4">${item.q}</p>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mb-4">
+          ${item.options.map((opt, i) => `
+            <button onclick="checkMC(${index}, ${i}, this)" class="opt-btn text-left p-3 rounded-lg border border-slate-300 hover:bg-blue-50 hover:border-blue-400 transition font-medium text-slate-700">
+              ${String.fromCharCode(65 + i)}. ${opt}
+            </button>
+          `).join('')}
+        </div>
+        <div id="mc-exp-${index}" class="hidden p-3 rounded-lg text-sm font-semibold"></div>
+      `;
+      mcContainer.appendChild(qCard);
+    });
+
+    function checkMC(qIdx, selectedOpt, btn) {
+      if (answeredQuestions.has(`mc-${qIdx}`)) return;
+      answeredQuestions.add(`mc-${qIdx}`);
+
+      const item = mcData[qIdx];
+      const parent = btn.parentElement;
+      const buttons = parent.querySelectorAll('.opt-btn');
+      const expDiv = document.getElementById(`mc-exp-${qIdx}`);
+
+      buttons.forEach((b, i) => {
+        b.disabled = true;
+        if (i === item.answer) {
+          b.classList.add('correct');
+        }
+      });
+
+      if (selectedOpt === item.answer) {
+        userScore++;
+        expDiv.className = "p-3 rounded-lg text-sm font-semibold bg-emerald-100 text-emerald-800 border border-emerald-300";
+        expDiv.innerText = `Correct! ${item.explanation}`;
+      } else {
+        btn.classList.add('incorrect');
+        expDiv.className = "p-3 rounded-lg text-sm font-semibold bg-rose-100 text-rose-800 border border-rose-300";
+        expDiv.innerText = `Incorrect. ${item.explanation}`;
+      }
+      expDiv.classList.remove('hidden');
+      updateScoreboard();
+    }
+
+    // Render True/False
+    const tfContainer = document.getElementById('tf-container');
+    tfData.forEach((item, index) => {
+      const qCard = document.createElement('div');
+      qCard.className = "bg-white p-6 rounded-xl shadow-md border border-slate-200";
+      qCard.innerHTML = `
+        <p class="font-bold text-slate-800 text-lg mb-4">${item.q}</p>
+        <div class="flex gap-4 mb-4">
+          <button onclick="checkTF(${index}, true, this)" class="opt-tf-btn px-6 py-2 rounded-lg border border-slate-300 hover:bg-blue-50 font-bold text-slate-700 transition">True</button>
+          <button onclick="checkTF(${index}, false, this)" class="opt-tf-btn px-6 py-2 rounded-lg border border-slate-300 hover:bg-blue-50 font-bold text-slate-700 transition">False</button>
+        </div>
+        <div id="tf-exp-${index}" class="hidden p-3 rounded-lg text-sm font-semibold"></div>
+      `;
+      tfContainer.appendChild(qCard);
+    });
+
+    function checkTF(qIdx, userChoice, btn) {
+      if (answeredQuestions.has(`tf-${qIdx}`)) return;
+      answeredQuestions.add(`tf-${qIdx}`);
+
+      const item = tfData[qIdx];
+      const parent = btn.parentElement;
+      const buttons = parent.querySelectorAll('.opt-tf-btn');
+      const expDiv = document.getElementById(`tf-exp-${qIdx}`);
+
+      buttons.forEach(b => b.disabled = true);
+
+      if (userChoice === item.a) {
+        userScore++;
+        btn.classList.add('correct');
+        expDiv.className = "p-3 rounded-lg text-sm font-semibold bg-emerald-100 text-emerald-800 border border-emerald-300";
+        expDiv.innerText = `Correct! ${item.exp}`;
+      } else {
+        btn.classList.add('incorrect');
+        expDiv.className = "p-3 rounded-lg text-sm font-semibold bg-rose-100 text-rose-800 border border-rose-300";
+        expDiv.innerText = `Incorrect. ${item.exp}`;
+      }
+      expDiv.classList.remove('hidden');
+      updateScoreboard();
+    }
+
+    // Render Identification
+    const idContainer = document.getElementById('id-container');
+    idData.forEach((item, index) => {
+      const qCard = document.createElement('div');
+      qCard.className = "bg-white p-6 rounded-xl shadow-md border border-slate-200";
+      qCard.innerHTML = `
+        <p class="font-bold text-slate-800 text-lg mb-4">${item.q}</p>
+        <div class="flex flex-wrap gap-3 mb-4">
+          <input type="text" id="id-input-${index}" placeholder="Type your answer here..." class="flex-1 min-w-[250px] p-3 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 font-medium">
+          <button id="id-btn-${index}" onclick="checkID(${index})" class="bg-blue-600 text-white px-6 py-3 rounded-lg font-bold hover:bg-blue-700 transition">Check</button>
+        </div>
+        <div id="id-exp-${index}" class="hidden p-3 rounded-lg text-sm font-semibold"></div>
+      `;
+      idContainer.appendChild(qCard);
+    });
+
+    function checkID(qIdx) {
+      if (answeredQuestions.has(`id-${qIdx}`)) return;
+
+      const input = document.getElementById(`id-input-${qIdx}`);
+      const btn = document.getElementById(`id-btn-${qIdx}`);
+      const expDiv = document.getElementById(`id-exp-${qIdx}`);
+      const val = input.value.trim().toLowerCase();
+
+      if (!val) return;
+
+      answeredQuestions.add(`id-${qIdx}`);
+      input.disabled = true;
+      btn.disabled = true;
+
+      const item = idData[qIdx];
+      const isCorrect = item.answers.some(ans => ans.toLowerCase() === val);
+
+      if (isCorrect) {
+        userScore++;
+        input.classList.add('correct');
+        expDiv.className = "p-3 rounded-lg text-sm font-semibold bg-emerald-100 text-emerald-800 border border-emerald-300";
+        expDiv.innerText = `Correct! Answer: ${item.answers[0]}. ${item.exp}`;
+      } else {
+        input.classList.add('incorrect');
+        expDiv.className = "p-3 rounded-lg text-sm font-semibold bg-rose-100 text-rose-800 border border-rose-300";
+        expDiv.innerText = `Incorrect. Acceptable Answer: ${item.answers[0]}. ${item.exp}`;
+      }
+      expDiv.classList.remove('hidden');
+      updateScoreboard();
+    }
+  </script>
+</body>
+</html>
